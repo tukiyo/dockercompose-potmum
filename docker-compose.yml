@@ -1,5 +1,6 @@
 podmum:
-  build: tukiyo3/potmum
+  #build: .
+  image: tukiyo3/potmum
   ports:
    - "9292:9292"
   volumes:
