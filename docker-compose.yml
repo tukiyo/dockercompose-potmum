@@ -5,6 +5,10 @@ potmum:
    - "9292:9292"
   volumes:
    - ./db/production.sqlite3:/srv/potmum/db/production.sqlite3
+   - ./attachment_files/:/srv/potmum/public/attachment_files/
   environment:
+    PRIVATE_MODE: 0
+    USE_ATTACHMENT_FILE: 1
+    COLOR_THEME: "blue"
     GITHUB_KEY: "XXXXXXXXXXXXXXXXXXXX"
     GITHUB_SECRET: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
