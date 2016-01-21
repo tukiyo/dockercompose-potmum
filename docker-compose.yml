@@ -1,4 +1,4 @@
-podmum:
+potmum:
   #build: .
   image: tukiyo3/potmum
   ports:
