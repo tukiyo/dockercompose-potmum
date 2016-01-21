@@ -1,0 +1,9 @@
+podmum:
+  build: .
+  ports:
+   - "9292:9292"
+  volumes:
+   - ./db/production.sqlite3:/srv/potmum/db/production.sqlite3
+  environment:
+    GITHUB_KEY: "XXXXXXXXXXXXXXXXXXXX"
+    GITHUB_SECRET: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
