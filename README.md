@@ -16,10 +16,7 @@ GITHUB_SECRET: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 ## 起動
 
 ```
-mv db/production.sqlite3.empty db/production.sqlite3
-```
-
-```
+cp -a db/production.sqlite3.empty db/production.sqlite3
 docker-compose up
 ```
 

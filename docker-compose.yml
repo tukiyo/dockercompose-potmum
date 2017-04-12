@@ -1,14 +1,16 @@
 potmum:
-  #build: .
   image: tukiyo3/potmum
+  restart: always
   ports:
-   - "9292:9292"
+   - "3000:3000"
   volumes:
+   - /etc/localtime:/etc/localtime
    - ./db/production.sqlite3:/srv/potmum/db/production.sqlite3
    - ./attachment_files/:/srv/potmum/public/attachment_files/
   environment:
     PRIVATE_MODE: 0
     USE_ATTACHMENT_FILE: 1
     COLOR_THEME: "blue"
+    # see https://github.com/settings/developers
     GITHUB_KEY: "XXXXXXXXXXXXXXXXXXXX"
     GITHUB_SECRET: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"

@@ -1,48 +1,51 @@
-FROM ruby:2.3.0-slim
+FROM debian:9
 
-RUN \
-  set -eux ;\
-  echo "## mirror ----------------------------" ;\
-  sed -i -e 's@http://archive@http://jp.archive@' /etc/apt/sources.list ;\
-  apt-get update -qq ;\
-  apt-get install -y vim-tiny dialog locales ;\
-  echo "## localize --------------------------" ;\
-  unlink /etc/localtime ;\
-  ln -s /usr/share/zoneinfo/Japan /etc/localtime ;\
-  locale-gen ja_JP.UTF-8 ;\
-  echo "## cache clear -----------------------" ;\
-  mv /etc/apt/sources.list /etc/apt/sources.list.bak ;\
-  apt-get clean ;\
-  mv /etc/apt/sources.list.bak /etc/apt/sources.list ;\
-  echo
+RUN apt-get update
+RUN apt-get install -y curl apt-transport-https gnupg git
 
-RUN \
-  apt-get update -qq ;\
-  apt-get install -y bundler git libpq-dev libsqlite3-dev rake npm sqlite3 ;\
-  apt-get clean ;\
-  ln -s /usr/bin/nodejs /usr/local/bin/node ;\
-  git clone https://github.com/rutan/potmum.git /srv/potmum ;\
-  echo
+# nodejs v6
+RUN echo "deb https://deb.nodesource.com/node_6.x sid main" > /etc/apt/sources.list.d/nodesource.list
+RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
+RUN apt-get update
+RUN apt-get install -y nodejs
 
+# yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update
+RUN apt-get install -y yarn
+
+# ruby2.3
+RUN apt-get install -y ruby-dev build-essential
+
+RUN git clone https://github.com/rutan/potmum.git /srv/potmum
 WORKDIR /srv/potmum
 
-RUN \
-  sed -i "s/ruby '2.2.2'/ruby '2.3.0'/g" Gemfile ;\
-  bundle install --path vendor/bundle ;\
-  echo
-
-RUN \
-  sed -i \
-    -e 's@adapter: postgresql@<<: *default@g' \
+# potmum
+RUN yarn install
+RUN gem install bundler
+RUN bundle config git.allow_insecure true
+RUN apt-get install -y libpq-dev libsqlite3-dev
+RUN bundle install --path vendor/bundle
+RUN apt-get install -y sqlite3
+RUN sed -i \
+    -e "s@adapter: postgresql@<<: *default@g" \
     -e "s@url: <%= ENV\['DATABASE_URL'\] %>@database: db/production.sqlite3@g" \
     config/database.yml ;\
-  RAILS_ENV=production \
-    bundle exec rake assets:precompile assets:environment db:create db:migrate ;\
-  echo
+    RAILS_ENV=production bundle exec rake db:create db:migrate assets:precompile
 
-ENV RAILS_ENV="production"
+## see https://github.com/rutan/potmum
+ENV RAILS_ENV=production
+ENV COLOR_THEME="blue"
+ENV USE_ATTACHMENT_FILE=1
+#ENV ROOT_URL="http://localhost:3000"
+## see https://github.com/settings/developers
 ENV USE_GITHUB=1
 ENV GITHUB_KEY="XXXXXXXXXXXXXXXXXXXX"
 ENV GITHUB_SECRET="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-EXPOSE 9292
-ENTRYPOINT SECRET_KEY_BASE=`rake secret` bundle exec puma
+
+EXPOSE 3000
+VOLUME /srv/potmum/db/
+VOLUME /srv/potmum/public/attachment_files/
+
+ENTRYPOINT SECRET_KEY_BASE=`rake secret` bundle exec puma -C config/puma.rb
