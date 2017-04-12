@@ -11,7 +11,7 @@ GITHUB_KEY: "XXXXXXXXXXXXXXXXXXXX"
 GITHUB_SECRET: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 ```
 
-![github](https://qiita-image-store.s3.amazonaws.com/0/25728/d22ea7ba-7945-68bc-e626-e24b03c4ec4a.png)
+![github](https://qiita-image-store.s3.amazonaws.com/0/25728/023fb34c-91fc-cc98-2329-f9363a02467b.png)
 
 ## 起動
 
