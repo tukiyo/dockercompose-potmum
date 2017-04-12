@@ -2,24 +2,30 @@
 
 ## 使い方
 
+```
+git clone https://github.com/tukiyo/dockercompose-potmum/ potmum
+cd potmum
+cp -a db/production.sqlite3.empty db/production.sqlite3
+```
+
 * https://github.com/settings/applications/new
 
-にアクセスしdocker-compose.ymlの以下を書き換えます。
+![github](https://qiita-image-store.s3.amazonaws.com/0/25728/023fb34c-91fc-cc98-2329-f9363a02467b.png)
+
+docker-compose.ymlの以下を書き換えます。
 
 ```
 GITHUB_KEY: "XXXXXXXXXXXXXXXXXXXX"
 GITHUB_SECRET: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 ```
 
-![github](https://qiita-image-store.s3.amazonaws.com/0/25728/023fb34c-91fc-cc98-2329-f9363a02467b.png)
-
-## 起動
+起動
 
 ```
-cp -a db/production.sqlite3.empty db/production.sqlite3
-docker-compose up
+docker-compose up -d
 ```
 
-## バックアップ
+## バックアップ対象
 
-* db/production.sqlite3 を大切に保管してください。
+* ./db/production.sqlite3
+* ./attachment_files/
