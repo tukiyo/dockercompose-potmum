@@ -1,4 +1,4 @@
-FROM ruby:2.4.1-slim-jessie
+FROM ruby:2.4.1
 
 RUN apt-get update
 RUN apt-get install -y curl apt-transport-https gnupg git
