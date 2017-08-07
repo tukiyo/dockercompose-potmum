@@ -29,3 +29,11 @@ docker-compose up -d
 
 * ./db/production.sqlite3
 * ./attachment_files/
+
+## バージョンアップ方法
+
+```
+docker-compose exec potmum bundle exec rake db:migrate
+```
+
+* db/production.sqlite3 がmigrateによって更新されます。
