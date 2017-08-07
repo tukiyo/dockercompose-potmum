@@ -1,10 +1,10 @@
-FROM debian:9
+FROM ruby:2.4.1-slim-jessie
 
 RUN apt-get update
 RUN apt-get install -y curl apt-transport-https gnupg git
 
 # nodejs v6
-RUN echo "deb https://deb.nodesource.com/node_6.x sid main" > /etc/apt/sources.list.d/nodesource.list
+RUN echo "deb https://deb.nodesource.com/node_6.x jessie main" > /etc/apt/sources.list.d/nodesource.list
 RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
 RUN apt-get update
 RUN apt-get install -y nodejs
@@ -15,7 +15,7 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 RUN apt-get update
 RUN apt-get install -y yarn
 
-# ruby2.3
+# build pkgs
 RUN apt-get install -y ruby-dev build-essential
 
 RUN git clone https://github.com/rutan/potmum.git /srv/potmum
