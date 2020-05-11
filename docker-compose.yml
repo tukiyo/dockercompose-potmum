@@ -11,6 +11,26 @@ potmum:
     PRIVATE_MODE: 0
     USE_ATTACHMENT_FILE: 1
     COLOR_THEME: "blue"
-    # see https://github.com/settings/developers
+
+    # see https://github.com/rutan/potmum
+    #     https://github.com/settings/developers
     GITHUB_KEY: "XXXXXXXXXXXXXXXXXXXX"
     GITHUB_SECRET: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+
+    ## Google
+    # USE_GOOGLE: 1
+    # GOOGLE_KEY: ""
+    # GOOGLE_SECRET: ""
+    # GOOGLE_APPS_DOMAIN: ""
+
+    ## Slack
+    # USE_SLACK: 1
+    # SLACK_KEY: ""
+    # SLACK_SECRET: ""
+    # SLACK_TEAM_ID: ""
+    # SLACK_TEAM_NAME: ""
+
+    ## Twitter
+    # USE_TWITTER: 1
+    # TWITTER_KEY: ""
+    # TWITTER_SECRET: ""
