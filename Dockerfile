@@ -15,10 +15,7 @@ RUN curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 0.24.5
 # build pkgs
 RUN apt-get install -y ruby-dev build-essential
 
-#RUN git clone https://github.com/rutan/potmum.git /srv/potmum
-COPY potmum-sqlite3.tar.gz /srv
-WORKDIR /srv
-RUN tar xzf potmum-sqlite3.tar.gz
+RUN git clone https://github.com/tukiyo/potmum.git /srv/potmum
 WORKDIR /srv/potmum
 
 # potmum
