@@ -14,6 +14,7 @@ potmum:
 
     # see https://github.com/rutan/potmum
     #     https://github.com/settings/developers
+    USER_GITHUB: 1
     GITHUB_KEY: "XXXXXXXXXXXXXXXXXXXX"
     GITHUB_SECRET: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 

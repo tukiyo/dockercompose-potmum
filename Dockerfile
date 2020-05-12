@@ -10,20 +10,20 @@ RUN apt-get update
 RUN apt-get install -y nodejs
 
 # yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get update
-RUN apt-get install -y yarn
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 0.24.5
 
 # build pkgs
 RUN apt-get install -y ruby-dev build-essential
 
-RUN git clone https://github.com/rutan/potmum.git /srv/potmum
+#RUN git clone https://github.com/rutan/potmum.git /srv/potmum
+COPY potmum-sqlite3.tar.gz /srv
+WORKDIR /srv
+RUN tar xzf potmum-sqlite3.tar.gz
 WORKDIR /srv/potmum
 
 # potmum
-RUN yarn install
-RUN gem install bundler
+RUN /root/.yarn/bin/yarn install
+RUN gem install bundler -v 1.17.3
 RUN bundle config git.allow_insecure true
 RUN apt-get install -y libpq-dev libsqlite3-dev
 RUN bundle install --path vendor/bundle
@@ -35,14 +35,14 @@ RUN sed -i \
     RAILS_ENV=production bundle exec rake db:create db:migrate assets:precompile
 
 ## see https://github.com/rutan/potmum
-ENV RAILS_ENV=production
-ENV COLOR_THEME="blue"
-ENV USE_ATTACHMENT_FILE=1
+ENV RAILS_ENV=production \
+    COLOR_THEME="blue" \
+    USE_ATTACHMENT_FILE=1 \
+    USE_GITHUB=1 \
+    GITHUB_KEY="XXXXXXXXXXXXXXXXXXXX" \
+    GITHUB_SECRET="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 #ENV ROOT_URL="http://localhost:3000"
 ## see https://github.com/settings/developers
-ENV USE_GITHUB=1
-ENV GITHUB_KEY="XXXXXXXXXXXXXXXXXXXX"
-ENV GITHUB_SECRET="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
 EXPOSE 3000
 VOLUME /srv/potmum/db/
