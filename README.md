@@ -10,13 +10,14 @@ cp -a db/production.sqlite3.empty db/production.sqlite3
 
 * https://github.com/settings/applications/new
 
-![github](https://qiita-image-store.s3.amazonaws.com/0/25728/023fb34c-91fc-cc98-2329-f9363a02467b.png)
+GithubのAPI認証がサポート終了されて利用できなくなっているため
+`USE_DEVELOPER`を使うしかないです。
 
 docker-compose.ymlの以下を書き換えます。
 
 ```
-GITHUB_KEY: "XXXXXXXXXXXXXXXXXXXX"
-GITHUB_SECRET: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+USE_GITHUB: 0
+USE_DEVELOPER: 1
 ```
 
 起動
